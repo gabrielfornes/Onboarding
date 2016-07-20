@@ -25,9 +25,16 @@ $CellCCoordinates = "c$OffsetCompanyCount`:c$OffsetCompanyCount"
 $ExcelWorkBook = $ExcelObject | Get-Workbook -Verbose
 $ExcelWorksheet = $ExcelObject | Get-Worksheet -Name 'NYA anstnr'
 
-$hm = (Get-CellValue -Excel $ExcelObject -Coordinates $CellACoordinates -WorkSheetName $ExcelWorksheet).Anstnr
+$CellValueA = (Get-CellValue -Excel $ExcelObject -Coordinates $CellACoordinates -WorkSheetName $ExcelWorksheet).Anstnr
+$CellValueB = (Get-CellValue -Excel $ExcelObject -Coordinates $CellBCoordinates -WorkSheetName $ExcelWorksheet).Användarnamn
+$CellvalueC = (Get-CellValue -Excel $ExcelObject -Coordinates $CellCCoordinates -WorkSheetName $ExcelWorksheet).'Registrerat av'
 
-if ($hm -eq $EmployeeNumber)
+Write-Output "CellValueA: $CellValueA"
+Write-Output "CellValueB: $CellValueB"
+Write-Output "CellValueC: $CellvalueC"
+
+#Checks to see if the Cell it picks is the correct one and if the rest of the cells are empty. If they arent it means that it is about to overwrite something which we dont want.
+if (($CellValueA -eq $EmployeeNumber) -and ($CellValueB -eq $null) -and ($CellvalueC -eq $null))
 {
   Write-Host 'hm'
 }
